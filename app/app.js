@@ -14,7 +14,9 @@ class App {
         })
 
         //chargement de la page
-        App.browse();
+        $(document).ready(() => {
+            App.browse();
+        });
 
     }
 
@@ -36,12 +38,6 @@ class App {
 
             $('main').hide().html(view).fadeIn();
 
-        })
-
-      
-
-
-        
+        })           
     }
-
 }
