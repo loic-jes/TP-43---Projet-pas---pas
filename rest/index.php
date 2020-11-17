@@ -1,6 +1,6 @@
 <?php
 
-// include('Db.php'); // Pour la suite
+include('Db.php'); // Pour la suite
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
@@ -16,8 +16,8 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $where = isset($_get['where']) ? $_get['where'] : null;
         $order = isset($_get['order']) ? $_get['order'] : null;
 
-        echo json_encode($_get);
-        // echo Db::select($table, $id, $where, $order); // Pour la suite
+        // echo json_encode($_get);
+        echo Db::select($table, $id, $where, $order); // Pour la suite
         break;
 
 
@@ -33,9 +33,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         }
 
         $fields = isset($_post['fields']) ? $_post['fields'] : null;
-        // echo Db::insert($table, $fields); // Pour la suite
+        echo Db::insert($table, $fields); // Pour la suite
         
-        echo json_encode($_post);
+        // echo json_encode($_post);
         break;
 
 
