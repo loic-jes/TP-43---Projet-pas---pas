@@ -9,14 +9,16 @@ Rest.get({table:"Billy",id:0,where:"Test du where",order:"Test de l'order"}).don
     console.log(`Résultat de la requête get : ${resp}`)
 })
 
-Rest.post({table : "Billy", test1 : "Blblbl", test2 : "Blblbl 2"}).done((resp) => {console.log(`Résultat de la requête post : ${resp}`)});
+Rest.post({table : "Billy", fields: {test1:"Blblbl",test2:"Blblbl 2"}}).done((resp) => {console.log(`Résultat de la requête post : ${resp}`)});
 
 
 Rest.put ({
     table : "Billy",
     id : 0,
-    repas : "Pates au beurre",
-    boisson : "Eau plate"
+    fields : {
+        repas:"Pates au beurre",
+        boisson:"Eau plate"
+    }
 }).done((resp) => {
     console.log("Résultat de la requête put " + resp);
 })

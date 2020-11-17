@@ -84,10 +84,14 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         
 }
 
-function validate_request($request)
-{
+function validate_request($request) {
     foreach ($request as $k => $v) {
-        $request[$k] = htmlspecialchars(strip_tags(stripslashes(trim($v))));
+        if(is_array($v)){
+            validate_request($v);
+        }
+        else{
+            $request[$k] = htmlspecialchars(strip_tags(stripslashes(trim($v))));
+        }
     }
     return $request;
 }
