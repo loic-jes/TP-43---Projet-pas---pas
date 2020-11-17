@@ -54,9 +54,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
         $fields = isset($_put['fields']) ? $_put['fields'] : null;
     
-        // echo Db::update($table, $id, $fields); // Pour la suite
+        echo Db::update($table, $id, $fields); // Pour la suite
 
-        echo json_encode($_put);
+        // echo json_encode($_put);
         break;
 
 
@@ -74,9 +74,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         break;
         }
         
-        // echo Db::delete($table, $id); // Pour la suite
+        echo Db::delete($table, $id); // Pour la suite
 
-        echo json_encode($_del);
+        // echo json_encode($_del);
         break;
 
     default:

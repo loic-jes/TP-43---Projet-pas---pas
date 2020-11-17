@@ -128,7 +128,41 @@ public static function insert ($table, $fields) {
 
 }
 
+public static function update($table, $id, $fields) {
 
+    $colums = "";
+    $valuesArray = array();
+
+    if (isset($fields) && isset($fields['id'])) {
+        unset($fields['id']);
+       };
+
+    foreach ($fields as $k => $v){
+        $colums .= $k . "=?,";
+        array_push($valuesArray, $v);
+    }
+
+    $colums = trim($colums, ",");
+    $where = "id = ?";
+    array_push($valuesArray, $id);
+
+    $sql = "UPDATE $table SET $colums WHERE $where";
+    $resp = self::query($sql, $valuesArray);
+    $resp = $resp && Db::$stmt->rowCount() == 1;
+
+    return json_encode($sql);
+
+}
+
+
+public static function delete($table, $id) {
+
+    $expr = "id = ".$id;
+    $sql = "DELETE FROM $table WHERE $expr";
+    $resp = self::query($sql);
+
+    return json_encode($sql);
+}
 
 }
 

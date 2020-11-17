@@ -9,8 +9,8 @@ App.start();
 //     console.log(`Résultat de la requête get : ${resp}`)
 // })
 
-Rest.post({table : "product", fields: {title:"Blblbl",description:"Blblbl 2"}}).done((resp) => {console.log(`Résultat de la requête post : ${resp}`)});
-Rest.post({table : "product"}).done((resp) => {console.log(`Résultat de la requête post 2 : ${resp}`)});
+// Rest.post({table : "product", fields: {title:"Blblbl",description:"Blblbl 2"}}).done((resp) => {console.log(`Résultat de la requête post : ${resp}`)});
+// Rest.post({table : "product"}).done((resp) => {console.log(`Résultat de la requête post 2 : ${resp}`)});
 
 
 // Rest.post({
@@ -24,21 +24,21 @@ Rest.post({table : "product"}).done((resp) => {console.log(`Résultat de la requ
 
 // Rest.put ({
 //     table : "product",
-//     // id : 0,
+//      id : 1,
 //     fields : {
-//         repas:"Pates au beurre",
-//         boisson:"Eau plate"
+//         title:"Pates au beurre",
+//         description:"Eau plate"
 //     }
 // }).done((resp) => {
 //     console.log("Résultat de la requête put " + resp);
 // })
 
-// Rest.delete({
-//     table : "product",
-//     id : 0,
-// }).done((resp) => {
-//     console.log(`Résultat de la requête Delete : ${resp}`)
-// })
+Rest.delete({
+    table : "product",
+    id : 131,
+}).done((resp) => {
+    console.log(`Résultat de la requête Delete : ${resp}`)
+})
 
 
 
@@ -51,11 +51,11 @@ Rest.post({table : "product"}).done((resp) => {console.log(`Résultat de la requ
 //     console.log("Sans table : requête get = " + resp)
 // })
 
-Rest.post({
-    tablz : "Non valide"
-}).done((resp) => {
-    console.log("Sans table : requête post = " + resp)
-})
+// Rest.post({
+//     tablz : "Non valide"
+// }).done((resp) => {
+//     console.log("Sans table : requête post = " + resp)
+// })
 
 // Rest.put({
 //     tablz : "Non valide"
