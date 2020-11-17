@@ -1,6 +1,6 @@
 <?php
 
-// include('Db.php'); // Pour la suite
+include('Db.php'); // Pour la suite
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
@@ -16,8 +16,8 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $where = isset($_get['where']) ? $_get['where'] : null;
         $order = isset($_get['order']) ? $_get['order'] : null;
 
-        echo json_encode($_get);
-        // echo Db::select($table, $id, $where, $order); // Pour la suite
+        // echo json_encode($_get);
+        echo Db::select($table, $id, $where, $order); // Pour la suite
         break;
 
 
@@ -33,9 +33,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         }
 
         $fields = isset($_post['fields']) ? $_post['fields'] : null;
-        // echo Db::insert($table, $fields); // Pour la suite
+        echo Db::insert($table, $fields); // Pour la suite
         
-        echo json_encode($_post);
+        // echo json_encode($_post);
         break;
 
 
@@ -54,9 +54,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
         $fields = isset($_put['fields']) ? $_put['fields'] : null;
     
-        // echo Db::update($table, $id, $fields); // Pour la suite
+        echo Db::update($table, $id, $fields); // Pour la suite
 
-        echo json_encode($_put);
+        // echo json_encode($_put);
         break;
 
 
@@ -74,9 +74,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         break;
         }
         
-        // echo Db::delete($table, $id); // Pour la suite
+        echo Db::delete($table, $id); // Pour la suite
 
-        echo json_encode($_del);
+        // echo json_encode($_del);
         break;
 
     default:
@@ -84,10 +84,14 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         
 }
 
-function validate_request($request)
-{
+function validate_request($request) {
     foreach ($request as $k => $v) {
-        $request[$k] = htmlspecialchars(strip_tags(stripslashes(trim($v))));
+        if(is_array($v)){
+            validate_request($v);
+        }
+        else{
+            $request[$k] = htmlspecialchars(strip_tags(stripslashes(trim($v))));
+        }
     }
     return $request;
 }
