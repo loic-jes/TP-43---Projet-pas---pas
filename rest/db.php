@@ -63,10 +63,10 @@ class Db {
         }
 
         if (!isset($order)){
-            $orderby = "id ASC";
+            $order = "id ASC";
         }
 
-        $sql = "SELECT * FROM $table WHERE $where ORDER BY $orderby";
+        $sql = "SELECT * FROM $table WHERE $where ORDER BY $order";
         $resp = self::query($sql, $params);
         $rows = Db::$stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -105,10 +105,8 @@ public static function insert ($table, $fields) {
 
     $sql = "INSERT INTO $table ($columns) VALUES ($values)";
     $resp = self::query($sql, $valuesArray);
-    $resp = $resp && Db::$stmt->rowCount() == 1;
-    if ($resp) {
-        $resp = self::$db->lastInsertId();
-    }
+
+
     return json_encode($sql);
 
 
@@ -130,7 +128,7 @@ public static function insert ($table, $fields) {
 
 public static function update($table, $id, $fields) {
 
-    $colums = "";
+    $columns = "";
     $valuesArray = array();
 
     if (isset($fields) && isset($fields['id'])) {
@@ -138,15 +136,15 @@ public static function update($table, $id, $fields) {
        };
 
     foreach ($fields as $k => $v){
-        $colums .= $k . "=?,";
+        $columns .= $k . "=?,";
         array_push($valuesArray, $v);
     }
 
-    $colums = trim($colums, ",");
+    $columns = trim($columns, ",");
     $where = "id = ?";
     array_push($valuesArray, $id);
 
-    $sql = "UPDATE $table SET $colums WHERE $where";
+    $sql = "UPDATE $table SET $columns WHERE $where";
     $resp = self::query($sql, $valuesArray);
     $resp = $resp && Db::$stmt->rowCount() == 1;
 
