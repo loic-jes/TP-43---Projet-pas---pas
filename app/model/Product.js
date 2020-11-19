@@ -3,12 +3,12 @@ class Product {
     constructor(obj){
 
         for (let element in obj) {
-            if (!isNaN(this.element)) {
-                this[element] = Number(obj[element]);
-            } else if (typeof this.element =='boolean') {
-                this[element] == "0" ? false : true;
+            if (typeof this[element] =='number') {
+                this[element] = obj[element] = Number(obj[element]);
+            } else if (typeof this[element] =='boolean') {
+                this[element] = obj[element] == "0" ? false : true;
             } else {
-                this[element] = String(obj[element]);
+                this[element] = obj[element] = String(obj[element]);
             }
         }
     }
