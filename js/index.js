@@ -6,19 +6,34 @@ Utils.init()
 // Tests : Qui sont sensés marcher (et marchent bien)
 
 
-Rest.get({table:"product"}).done((resp) => {
+// Rest.get({table:"product"}).done((resp) => {
+//     // console.log(`Résultat de la requête get : ${resp}`);
+//     let testParsing1 = resp.tryJsonParse();
+//     for (let obj of testParsing1) {
+//         console.log(obj);
+//         console.log(typeof obj);
+//         let bp;
+//         let product = new Product(obj);
+
+//         bp++;
+//     }
+//     let bp;
+// })
+
+Rest.get({table:"category"}).done((resp) => {
     // console.log(`Résultat de la requête get : ${resp}`);
     let testParsing1 = resp.tryJsonParse();
     for (let obj of testParsing1) {
         console.log(obj);
         console.log(typeof obj);
         let bp;
-        let product = new Product(obj);
+        let product = new Category(obj);
 
         bp++;
     }
     let bp;
 })
+
 
 // Rest.post({table : "product", fields: {title:"Blblbl",description:"Blblbl 2"}}).done((resp) => {console.log(`Résultat de la requête post : ${resp}`)});
 // Rest.post({table : "product"}).done((resp) => {console.log(`Résultat de la requête post 2 : ${resp}`)});
