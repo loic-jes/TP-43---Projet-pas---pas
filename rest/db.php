@@ -63,10 +63,10 @@ class Db {
         }
 
         if (!isset($order)){
-            $orderby = "id ASC";
+            $order = "id ASC";
         }
 
-        $sql = "SELECT * FROM $table WHERE $where ORDER BY $orderby";
+        $sql = "SELECT * FROM $table WHERE $where ORDER BY $order";
         $resp = self::query($sql, $params);
         $rows = Db::$stmt->fetchAll(PDO::FETCH_ASSOC);
 

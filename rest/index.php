@@ -1,6 +1,6 @@
 <?php
 
-include('Db.php'); // Pour la suite
+include('Db.php'); 
 
 switch ($_SERVER["REQUEST_METHOD"]) {
     case 'GET':
@@ -17,7 +17,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         $order = isset($_get['order']) ? $_get['order'] : null;
 
         // echo json_encode($_get);
-        echo Db::select($table, $id, $where, $order); // Pour la suite
+        echo Db::select($table, $id, $where, $order); 
         break;
 
 
@@ -33,8 +33,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         }
 
         $fields = isset($_post['fields']) ? $_post['fields'] : null;
-        echo Db::insert($table, $fields); // Pour la suite
-        
+        echo Db::insert($table, $fields);
         // echo json_encode($_post);
         break;
 
@@ -54,7 +53,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
         $fields = isset($_put['fields']) ? $_put['fields'] : null;
     
-        echo Db::update($table, $id, $fields); // Pour la suite
+        echo Db::update($table, $id, $fields); 
 
         // echo json_encode($_put);
         break;
@@ -74,7 +73,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         break;
         }
         
-        echo Db::delete($table, $id); // Pour la suite
+        echo Db::delete($table, $id); 
 
         // echo json_encode($_del);
         break;
