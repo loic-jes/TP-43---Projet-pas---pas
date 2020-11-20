@@ -1,6 +1,13 @@
 class App {
 
+    static datas = {};   
+
+    
     static start() {
+
+        Utils.init()
+
+    
 
         //onpopstate
         window.onpopstate = () => {
@@ -15,7 +22,13 @@ class App {
 
         //chargement de la page
         $(document).ready(() => {
-            App.browse();
+            App.loadClasses().done(() => {
+                App.loadAllTablesAndAssignAllClasses();
+                App.browse();
+                App.test();
+            })
+    
+
         });
 
     }
@@ -40,4 +53,166 @@ class App {
 
         })           
     }
+
+
+    static test() {
+
+        // Tests : Qui sont sensés marcher (et marchent bien)
+
+
+// Rest.get({table:"product"}).done((resp) => {
+//     // console.log(`Résultat de la requête get : ${resp}`);
+//     let testParsing1 = resp.tryJsonParse();
+//     for (let obj of testParsing1) {
+//         console.log(obj);
+//         let bp;
+//         let product = new Product(obj);
+//         console.log(product);
+
+
+//         bp++;
+//     }
+//     let bp;
+// })
+
+// Rest.get({table:"category"}).done((resp) => {
+//     // console.log(`Résultat de la requête get : ${resp}`);
+//     let testParsing1 = resp.tryJsonParse();
+//     for (let obj of testParsing1) {
+//         console.log(obj);
+//         console.log(typeof obj);
+//         let bp;
+//         let product = new Category(obj);
+
+//         bp++;
+//     }
+//     let bp;
+// })
+
+
+// Rest.post({table : "product", fields: {title:"Blblbl",description:"Blblbl 2"}}).done((resp) => {console.log(`Résultat de la requête post : ${resp}`)});
+// Rest.post({table : "product"}).done((resp) => {console.log(`Résultat de la requête post 2 : ${resp}`)});
+
+
+// Rest.post({
+//     table : "product",
+//     fields : {
+//         title : "blblbl",
+//         description : "blblbl"
+//     }
+// }).done((resp) => {console.log(`Résultat de la requête post 3 : ${resp}`)});
+
+
+// Rest.put ({
+//     table : "product",
+//      id : 1,
+//     fields : {
+//         title:"Pates au beurre",
+//         description:"Eau plate"
+//     }
+// }).done((resp) => {
+//     console.log("Résultat de la requête put " + resp);
+// })
+
+// Rest.delete({
+//     table : "product",
+//     id : 131,
+// }).done((resp) => {
+//     console.log(`Résultat de la requête Delete : ${resp}`)
+// })
+
+
+
+
+// Tests : Qui sont sensés être des erreurs (et sont donc stoppés via un false / break)
+
+// Rest.get({
+//     tablz : "Non valide"
+// }).done((resp) => {
+//     console.log("Sans table : requête get = " + resp)
+// })
+
+// Rest.post({
+//     tablz : "Non valide"
+// }).done((resp) => {
+//     console.log("Sans table : requête post = " + resp)
+// })
+
+// Rest.put({
+//     tablz : "Non valide"
+// }).done((resp) => {
+//     console.log("Sans table et/ou sans ID: requête put = " + resp)
+// })
+// Rest.delete({
+//     tablz : "Non valide"
+// }).done((resp) => {
+//     console.log("Sans table et/ou sans ID: requête delete = " + resp)
+
+// })
+    }
+
+
+    static classes = [
+        "model/Model"
+    ];
+    static extends = [
+        "model/Product", "model/Category", "model/Command", "model/Command_line", "model/User"
+    ];
+    static loadClasses() {
+        let deferred = $.Deferred();
+        let _classes = $.map(App.classes, (cl) => {//Chargement de la classe mère
+            return App.debug ? 
+                App.getScript("app/" + cl + ".js") : 
+                $.getScript("app/" + cl + ".js");
+        });
+        $.when.apply($, _classes).then(() => {//Puis chargement des classes filles
+            let _extends = $.map(App.extends, (cl) => {
+                return App.debug ? 
+                    App.getScript("app/" + cl + ".js") : 
+                    $.getScript("app/" + cl + ".js");
+            });
+            $.when.apply($, _extends).then(() => {
+                deferred.resolve()
+            });
+        });
+        return deferred.promise()
+    }
+    static getScript(scriptUrl) {
+        let deferred = $.Deferred();
+        const script = document.createElement('script');
+        script.src = scriptUrl;
+        script.defer = true;
+        script.onload = function(){
+            deferred.resolve()
+        };
+        document.body.appendChild(script);
+        return deferred.promise();
+    }
+
+
+    static loadAllTablesAndAssignAllClasses() {
+
+        let tableArrays = ["product", "category", "user", "command", "command_line"];
+
+        $(tableArrays).each((e) => {
+
+            Rest.get({table:tableArrays[e]}).done((viewStr) => {           
+
+
+                let data = viewStr.tryJsonParse();
+                let className = Utils.capitalize(tableArrays[e]);
+                let classe = Utils.tryEval(className);
+                let arr = [];
+    
+                $(data).each((i,obj) => {
+                    arr.push(new classe(obj));
+                })
+         
+                App.datas[tableArrays[e]] = arr;   
+
+        })
+    })      
+    }
+
+  
 }
