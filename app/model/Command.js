@@ -1,4 +1,4 @@
-class Category extends Model{
+class Command extends Model{
 
     constructor(obj){
         super(obj);
@@ -10,9 +10,7 @@ class Category extends Model{
 
     id = 0;
     active = true;
-    title = "";
-    description = "";
-    onsale = false;
-    ord = 0;
+    user_id = 0;
+    numero = 0;
 
 }
