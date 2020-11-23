@@ -3,7 +3,7 @@ class Product extends Model {
     constructor(obj){
 
         super(obj);
-        this.assign(obj);      
+        super.assign(obj);      
     }
 
 
