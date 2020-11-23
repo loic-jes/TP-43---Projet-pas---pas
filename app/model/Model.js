@@ -24,7 +24,7 @@ class Model {
 
             if (json) {
                 // TODO assign an ID
-                this.id = json;
+                fields.id = json;
                 deferred.resolve(this.id); // Renvoie l'id de la ligne, je pourrais m'en passer grâce au this.id du dessus
             } else {
                 console.log("Marche po");

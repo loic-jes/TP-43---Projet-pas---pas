@@ -23,15 +23,15 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
     case 'POST':
 
-        var_dump($_POST);
+        // var_dump($_POST);
 
-        var_dump(file_get_contents('php://input'));
+        // var_dump(file_get_contents('php://input'));
 
         $_post = json_decode(file_get_contents('php://input'), true);
-        var_dump($_post);
+        // var_dump($_post);
 
         $_post = validate_request($_post);
-        var_dump($_post);
+        // var_dump($_post);
 
 
 
@@ -44,7 +44,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
         $fields = isset($_post['fields']) ? $_post['fields'] : null;
         // echo json_encode($_post);
-        // echo Db::insert($table, $fields);
+        echo Db::insert($table, $fields);
 
         break;
 

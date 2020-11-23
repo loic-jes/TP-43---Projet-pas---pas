@@ -13,7 +13,7 @@ class Product extends Model {
     title = "";
     description = "";
     price = 0;
-    onsale = false;
+    onsale = true;
     ord = 0;
 
 }
