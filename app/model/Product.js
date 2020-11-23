@@ -8,12 +8,12 @@ class Product extends Model {
 
 
     id = 0;
-    active = 1;
+    active = true;
     category_id = 0;
     title = "";
     description = "";
     price = 0;
-    onsale = 0;
+    onsale = false;
     ord = 0;
 
 }

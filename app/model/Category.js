@@ -9,10 +9,10 @@ class Category extends Model{
 
 
     id = 0;
-    active = 1;
+    active = true;
     title = "";
     description = "";
-    onsale = 0;
+    onsale = false;
     ord = 0;
 
 }

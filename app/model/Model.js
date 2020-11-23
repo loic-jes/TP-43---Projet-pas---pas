@@ -5,7 +5,7 @@ class Model {
             if (typeof this[element] =='number') {
                 this[element] =  Number(obj[element]);
             } else if (typeof this[element] =='boolean') {
-                this[element] == ("1" || true) ? 1 : 0;
+                this[element] == ("1" || true) ? true : false;
             } else {
                 this[element] = String(obj[element]);
             }
@@ -28,6 +28,8 @@ class Model {
                 deferred.resolve(this.id); // Renvoie l'id de la ligne, je pourrais m'en passer grâce au this.id du dessus
             } else {
                 console.log("Marche po");
+                $('main').hide().html(resp).fadeIn();
+
                 deferred.reject(json)
             }
         }).fail((resp) => {
