@@ -33,8 +33,8 @@ class Db {
 
 
     private static $stmt = null;
-    public static function query($sql, $params = null)
-    {
+    public static function query($sql, $params = null){
+        
         $result = false;
         try {
             $stmt = self::connect()->prepare($sql);
@@ -106,8 +106,14 @@ public static function insert ($table, $fields) {
     $sql = "INSERT INTO $table ($columns) VALUES ($values)";
     $resp = self::query($sql, $valuesArray);
 
+    $resp = $resp && Db::$stmt->rowCount() == 1;
+        if ($resp) {
+            $resp = self::$db->lastInsertId();
+        }
+        return json_encode($resp);
 
-    return json_encode($sql);
+
+    return json_encode($resp);
 
 
     // Autre méthode : 
@@ -148,7 +154,7 @@ public static function update($table, $id, $fields) {
     $resp = self::query($sql, $valuesArray);
     $resp = $resp && Db::$stmt->rowCount() == 1;
 
-    return json_encode($sql);
+    return json_encode($resp);
 
 }
 
@@ -159,8 +165,8 @@ public static function delete($table, $id) {
     $sql = "DELETE FROM $table WHERE $expr";
     $resp = self::query($sql);
 
-    return json_encode($sql);
-}
+    $resp = $resp && Db::$stmt->rowCount() == 1;
+    return json_encode($resp);}
 
 }
 

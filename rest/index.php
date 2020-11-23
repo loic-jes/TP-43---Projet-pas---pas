@@ -23,18 +23,29 @@ switch ($_SERVER["REQUEST_METHOD"]) {
 
     case 'POST':
 
-        $_post = validate_request($_POST);
+        // var_dump($_POST);
+
+        // var_dump(file_get_contents('php://input'));
+
+        $_post = json_decode(file_get_contents('php://input'), true);
+        // var_dump($_post);
+
+        $_post = validate_request($_post);
+        // var_dump($_post);
+
+
 
         $table = isset($_post['table']) ? $_post['table'] : null;
 
         if ($table == null){
-            echo json_encode(false);
+            echo json_encode($_post);
         break;
         }
 
         $fields = isset($_post['fields']) ? $_post['fields'] : null;
-        echo Db::insert($table, $fields);
         // echo json_encode($_post);
+        echo Db::insert($table, $fields);
+
         break;
 
 
