@@ -2,17 +2,17 @@ class Category extends Model{
 
     constructor(obj){
         super(obj);
-        this.assign(obj);
+        super.assign(obj);
         
         let bp;
     }
 
 
     id = 0;
-    active = true;
+    active = 1;
     title = "";
     description = "";
-    onsale = false;
+    onsale = 0;
     ord = 0;
 
 }

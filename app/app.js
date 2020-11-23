@@ -5,7 +5,6 @@ class App {
     
     static start() {
 
-        Utils.init()
 
     
 
@@ -23,6 +22,7 @@ class App {
         //chargement de la page
         $(document).ready(() => {
             App.loadClasses().done(() => {
+                Utils.init()
                 App.loadAllTablesAndAssignAllClasses();
                 App.browse();
                 App.test();
@@ -58,6 +58,22 @@ class App {
     static test() {
 
         // Tests : Qui sont sensés marcher (et marchent bien)
+
+        let produkt = new Product;         // Marche bien avec une autre classe : pour l'exemple Category
+        produkt.insert({title:0}).done((resp) => {
+
+            produkt.title = "Le title"; // Ne marche plus si on gris le champ : fonctionne bien
+            produkt.update().done((resp) => {
+                console.log(resp);
+
+
+                produkt.delete().done((resp) => {
+                    console.log(resp);
+                })
+            })
+
+            
+        });
 
 
 // Rest.get({table:"product"}).done((resp) => {
@@ -153,7 +169,7 @@ class App {
 
 
     static classes = [
-        "model/Model"
+        "Utils", "Rest" , "model/Model"
     ];
     static extends = [
         "model/Product", "model/Category", "model/Command", "model/Command_line", "model/User"
