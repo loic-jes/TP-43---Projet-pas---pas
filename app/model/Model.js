@@ -4,8 +4,8 @@ class Model {
         for (let element in obj) {
             if (typeof this[element] =='number') {
                 this[element] =  Number(obj[element]);
-            } else if (typeof this[element] =='boolean') {
-                this[element] == ("1" || true) ? true : false;
+            } else if (this[element] != undefined && typeof this[element] == 'boolean') {
+                this[element] = obj[element] == ('1' || true) ? true : false;
             } else {
                 this[element] = String(obj[element]);
             }
