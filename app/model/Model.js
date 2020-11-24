@@ -101,9 +101,79 @@ class Model {
     }
 
 
-    select (){
+    select (table, id=null){
+
+        // let table = this.constructor.name.toLowerCase();
+        // let id = prompt("Quelle id ?");
+        // let id = 3;
+
+        if (id !== null) {
+
+        let deferred = $.Deferred();
+
+        Rest.get({table, id}).done((resp) => {
+            // console.log(resp);
+            if (resp) {
+            // resp = resp.substr(1,resp.length -2);
+            resp = resp.removeFirstandLastChar();
+            // console.log(resp);
+            let json = resp.tryJsonParse();
+            // console.log(json);         
+            let classe = Utils.tryEval(Utils.capitalize(table));
+            let newItem = new classe(json);
+            deferred.resolve(json)
+            return newItem;
+                
+            } else {
+                console.log("Marche po");
+                deferred.reject(resp)
+            }
+        }).fail((resp) => {
+            console.log("Marche po");
+            deferred.reject(resp)
+        })
+
+        return deferred.promise();  
+
+    } else {
+
+        let deferred = $.Deferred();
+
+        Rest.get({table}).done((resp) => {
+            // console.log(resp);
+            if (resp) {
+            // resp = resp.substr(1,resp.length -2);
+            // resp = resp.removeFirstandLastChar();
+            // console.log(resp);
+            let json = resp.tryJsonParse();
+            // console.log(json);         
+            let classe = Utils.tryEval(Utils.capitalize(table));
+            let arr = [];
+
+            $(json).each((i, obj)  => {
+                arr.push(new classe(obj))
+            })
+
+            deferred.resolve(json)
+            console.log(arr);
+
+            return arr;
+                
+            } else {
+                console.log("Marche po");
+                deferred.reject(resp)
+            }
+        }).fail((resp) => {
+            console.log("Marche po");
+            deferred.reject(resp)
+        })
+
+        return deferred.promise();  
+
+        
 
     }
+}
 
     
 
