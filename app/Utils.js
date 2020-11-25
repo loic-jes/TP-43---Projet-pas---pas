@@ -17,6 +17,11 @@ class Utils {
             value = this.substr(1,this.length -2);
             return value;
         }
+
+        String.prototype.intoClass = function () {
+            return Utils.tryEval(Utils.capitalize(this));
+             
+        }
     }
 
     static tryEval(expr){

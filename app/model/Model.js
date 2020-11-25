@@ -100,23 +100,25 @@ class Model {
 
     }
 
-
+static list = [];
 
     static select (params){
 
         let table = this.name.toLowerCase();
         params.table = table;
-        // Je ne sais pas pourquoi mais si je définis "Let classe" ici, il n'est pas pris dans le if de 2e niveau lignes 126 et 135 et fait planter le JS
+        
+        let classe = table.intoClass();
+        classe.list = [] // Va créer une list propre à la classe : Product.list, ou Category.list, par exemple
+
         let deferred = $.Deferred();
 
         Rest.get(params).done((resp) => {
-            console.log(resp);
+
             if (resp) {
 
                 let json = resp.tryJsonParse();
-                // console.log("Length = "+json.length);         
-
-                if (json.length !== 1) {
+                
+                if (json.length !== 1) { // Si on nous renvoie une Array complète
 
                     let arr = [];
                     let classe = Utils.tryEval(Utils.capitalize(table));
@@ -125,14 +127,17 @@ class Model {
                     $(json).each((i, obj)  => {
                     arr.push(new classe(obj));
                     })
+
+                    classe.list.push(arr);
                     
                     deferred.resolve(arr);
                     let bp;
 
-                } else {
+                } else {   // Si l'array ne contient qu'un unique objet
 
                 let classe = Utils.tryEval(Utils.capitalize(table));            
                 let newItem = new classe(json[0]);
+                classe.list.push(newItem);
                 deferred.resolve(newItem);
                 let bp;
 
@@ -154,7 +159,7 @@ class Model {
 
 //         // let table = this.constructor.name.toLowerCase();
 //         // let id = prompt("Quelle id ?");
-//         // let id = 3;
+//         // let id = 3; // Essais manuels sur un ID
 
 //         if (id !== null) {
 
