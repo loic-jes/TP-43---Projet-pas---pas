@@ -101,28 +101,42 @@ class Model {
     }
 
 
-    select (table, id=null){
 
-        // let table = this.constructor.name.toLowerCase();
-        // let id = prompt("Quelle id ?");
-        // let id = 3;
+    static select (params){
 
-        if (id !== null) {
-
+        let table = this.name.toLowerCase();
+        params.table = table;
+        // Je ne sais pas pourquoi mais si je définis "Let classe" ici, il n'est pas pris dans le if de 2e niveau lignes 126 et 135 et fait planter le JS
         let deferred = $.Deferred();
 
-        Rest.get({table, id}).done((resp) => {
-            // console.log(resp);
+        Rest.get(params).done((resp) => {
+            console.log(resp);
             if (resp) {
-            // resp = resp.substr(1,resp.length -2);
-            resp = resp.removeFirstandLastChar();
-            // console.log(resp);
-            let json = resp.tryJsonParse();
-            // console.log(json);         
-            let classe = Utils.tryEval(Utils.capitalize(table));
-            let newItem = new classe(json);
-            deferred.resolve(json)
-            return newItem;
+
+                let json = resp.tryJsonParse();
+                // console.log("Length = "+json.length);         
+
+                if (json.length !== 1) {
+
+                    let arr = [];
+                    let classe = Utils.tryEval(Utils.capitalize(table));
+
+
+                    $(json).each((i, obj)  => {
+                    arr.push(new classe(obj));
+                    })
+                    
+                    deferred.resolve(arr);
+                    let bp;
+
+                } else {
+
+                let classe = Utils.tryEval(Utils.capitalize(table));            
+                let newItem = new classe(json[0]);
+                deferred.resolve(newItem);
+                let bp;
+
+                }       
                 
             } else {
                 console.log("Marche po");
@@ -134,46 +148,80 @@ class Model {
         })
 
         return deferred.promise();  
+}
 
-    } else {
+//     select (table, id=null){ // Old Select
 
-        let deferred = $.Deferred();
+//         // let table = this.constructor.name.toLowerCase();
+//         // let id = prompt("Quelle id ?");
+//         // let id = 3;
 
-        Rest.get({table}).done((resp) => {
-            // console.log(resp);
-            if (resp) {
-            // resp = resp.substr(1,resp.length -2);
-            // resp = resp.removeFirstandLastChar();
-            // console.log(resp);
-            let json = resp.tryJsonParse();
-            // console.log(json);         
-            let classe = Utils.tryEval(Utils.capitalize(table));
-            let arr = [];
+//         if (id !== null) {
 
-            $(json).each((i, obj)  => {
-                arr.push(new classe(obj))
-            })
+//         let deferred = $.Deferred();
 
-            deferred.resolve(json)
-            console.log(arr);
+//         Rest.get({table, id}).done((resp) => {
+//             console.log(resp);
+//             if (resp) {
 
-            return arr;
+//             // resp = resp.substr(1,resp.length -2);
+//             // resp = resp.removeFirstandLastChar();
+//             // console.log(resp);
+//             let json = resp.tryJsonParse();
+//             // console.log(json);         
+//             console.log("Length = "+json.length);         
+//             let classe = Utils.tryEval(Utils.capitalize(table));
+//             let newItem = new classe(json[0]);
+//             deferred.resolve(newItem)
+           
                 
-            } else {
-                console.log("Marche po");
-                deferred.reject(resp)
-            }
-        }).fail((resp) => {
-            console.log("Marche po");
-            deferred.reject(resp)
-        })
+//             } else {
+//                 console.log("Marche po");
+//                 deferred.reject(resp)
+//             }
+//         }).fail((resp) => {
+//             console.log("Marche po");
+//             deferred.reject(resp)
+//         })
 
-        return deferred.promise();  
+//         return deferred.promise();  
+
+//     } else {
+
+//         let deferred = $.Deferred();
+
+//         Rest.get({table}).done((resp) => {
+//             // console.log(resp);
+//             if (resp) {
+//             // resp = resp.substr(1,resp.length -2);
+//             // resp = resp.removeFirstandLastChar();
+//             // console.log(resp);
+//             let json = resp.tryJsonParse();
+//             // console.log(json);         
+//             let classe = Utils.tryEval(Utils.capitalize(table));
+//             let arr = [];
+
+//             $(json).each((i, obj)  => {
+//                 arr.push(new classe(obj))
+//             })
+
+//             deferred.resolve(arr)
+                
+//             } else {
+//                 console.log("Marche po");
+//                 deferred.reject(resp)
+//             }
+//         }).fail((resp) => {
+//             console.log("Marche po");
+//             deferred.reject(resp)
+//         })
+
+//         return deferred.promise();  
 
         
 
-    }
-}
+//     }
+// }
 
     
 

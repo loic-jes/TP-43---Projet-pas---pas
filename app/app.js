@@ -76,7 +76,10 @@ class App {
         // });
 
         // produkt.select("product", 3);
-        produkt.select("product");
+        // produkt.select("product");
+
+        // Product.select({id:3});
+        Product.select({});
 
 
 // Rest.get({table:"product"}).done((resp) => {
