@@ -10,7 +10,13 @@ class Utils {
                 alert("Parse Error");
             }        
             return value  
-        }      
+        }    
+        
+        String.prototype.removeFirstandLastChar = function (){
+            let value;
+            value = this.substr(1,this.length -2);
+            return value;
+        }
     }
 
     static tryEval(expr){
@@ -26,6 +32,8 @@ class Utils {
     static capitalize(str){
         return str.charAt(0).toUpperCase() + str.slice(1);
     }   
+
+
 
 
     
