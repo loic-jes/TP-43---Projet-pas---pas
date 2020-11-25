@@ -1,19 +1,15 @@
 class App {
 
     static datas = {};   
-
     
     static start() {
-
-
-    
 
         //onpopstate
         window.onpopstate = () => {
             App.browse();
         }
-        //correction burger
 
+        //correction burger : le réduit si on clique pour changer de vue
         $('.nav-link').on('click', (evt) => {
             let btn = $(evt.target).closest('.navbar').find('.navbar-toggler').not('.collapsed');
             btn ? btn.click() : null;
@@ -21,11 +17,11 @@ class App {
 
         //chargement de la page
         $(document).ready(() => {
-            App.loadClasses().done(() => {
-                Utils.init()
-                App.loadAllTablesAndAssignAllClasses();
-                App.browse();
-                App.test();
+            App.loadClasses().done(() => {    // Charge les classes
+                Utils.init()                  // Effectue les surcharges de String
+                // App.loadAllTablesAndAssignAllClasses();       // Pas opti
+                App.browse();  
+                // App.test();
             })
     
 
@@ -37,29 +33,89 @@ class App {
         //récupérer le hash et l'afficher dans main
 
         let hash = (window.location.hash || '#accueil').substring(1);    // Prend l'adresse en référence, où accueil si rien
-        let page = null;
+        let route = null;
+        let postHash = null;
 
-        if (hash.indexOf('/') != -1) {
-            page = hash.split('/')[0];
+        if (hash.indexOf('/') != -1) {    // Si y'a un /
+            route = hash.split('/')[0];
+            postHash = hash.split('/')[1];
         } else {
-            page = hash;
+            route = hash;            // Sinon, on le prend entier
         }   
-
-        $.get('app/view/' + page + ".html").done((viewStr) => {
-
-            let view = viewStr;       
-
-            $('main').hide().html(view).fadeIn();
-
-        })           
+     //  le routeur en JS
+        Router.route(route, postHash).done(view => {
+            //le router js renvoie juste la vue, les models sont déjà remplis
+            $('main').hide().html(view).fadeIn('fast');
+        })
     }
 
+    static classes = [
+        "Utils", "Rest" , "model/Model", "route/Router"
+    ];
+    static extends = [
+        "model/Product", "model/Category", "model/Command", "model/Command_line", "model/User"
+    ];
+    static loadClasses() {
+        let deferred = $.Deferred();
+        let _classes = $.map(App.classes, (cl) => {//Chargement de la classe mère
+            return App.debug ? 
+                App.getScript("app/" + cl + ".js") : 
+                $.getScript("app/" + cl + ".js");
+        });
+        $.when.apply($, _classes).then(() => {//Puis chargement des classes filles
+            let _extends = $.map(App.extends, (cl) => {
+                return App.debug ? 
+                    App.getScript("app/" + cl + ".js") : 
+                    $.getScript("app/" + cl + ".js");
+            });
+            $.when.apply($, _extends).then(() => {
+                deferred.resolve()
+            });
+        });
+        return deferred.promise()
+    }
+    static getScript(scriptUrl) {
+        let deferred = $.Deferred();
+        const script = document.createElement('script');
+        script.src = scriptUrl;
+        script.defer = true;
+        script.onload = function(){
+            deferred.resolve()
+        };
+        document.body.appendChild(script);
+        return deferred.promise();
+    }
+
+
+    // static loadAllTablesAndAssignAllClasses() {
+
+    //     let tableArrays = ["product", "category", "user", "command", "command_line"];
+
+    //     $(tableArrays).each((e) => {
+
+    //         Rest.get({table:tableArrays[e]}).done((viewStr) => {           
+
+
+    //             let data = viewStr.tryJsonParse();
+    //             let className = Utils.capitalize(tableArrays[e]);
+    //             let classe = Utils.tryEval(className);
+    //             let arr = [];
+    
+    //             $(data).each((i,obj) => {
+    //                 arr.push(new classe(obj));
+    //             })
+         
+    //             App.datas[tableArrays[e]] = arr;   
+
+    //     })
+    // })      
+    // }
 
     static test() {
 
         // Tests : Qui sont sensés marcher (et marchent bien)
 
-        let produkt = new Product({ id: 160, active: false, category_id: 3, title: 'ABC', description: 'DEF', price: 10.5, onsale: false, ord: 100 });         // Marche bien avec une autre classe : pour l'exemple Category
+        // let produkt = new Product({ id: 160, active: false, category_id: 3, title: 'ABC', description: 'DEF', price: 10.5, onsale: false, ord: 100 });         // Marche bien avec une autre classe : pour l'exemple Category
         // produkt.insert().done((resp) => {
 
         //     produkt.title = "Le title"; // Ne marche plus si on gris le champ : fonctionne bien
@@ -79,7 +135,7 @@ class App {
         // produkt.select("product");
 
         // Product.select({id:3});
-        Product.select({});
+        // Product.select({});
 
 
 // Rest.get({table:"product"}).done((resp) => {
@@ -174,67 +230,7 @@ class App {
     }
 
 
-    static classes = [
-        "Utils", "Rest" , "model/Model"
-    ];
-    static extends = [
-        "model/Product", "model/Category", "model/Command", "model/Command_line", "model/User"
-    ];
-    static loadClasses() {
-        let deferred = $.Deferred();
-        let _classes = $.map(App.classes, (cl) => {//Chargement de la classe mère
-            return App.debug ? 
-                App.getScript("app/" + cl + ".js") : 
-                $.getScript("app/" + cl + ".js");
-        });
-        $.when.apply($, _classes).then(() => {//Puis chargement des classes filles
-            let _extends = $.map(App.extends, (cl) => {
-                return App.debug ? 
-                    App.getScript("app/" + cl + ".js") : 
-                    $.getScript("app/" + cl + ".js");
-            });
-            $.when.apply($, _extends).then(() => {
-                deferred.resolve()
-            });
-        });
-        return deferred.promise()
-    }
-    static getScript(scriptUrl) {
-        let deferred = $.Deferred();
-        const script = document.createElement('script');
-        script.src = scriptUrl;
-        script.defer = true;
-        script.onload = function(){
-            deferred.resolve()
-        };
-        document.body.appendChild(script);
-        return deferred.promise();
-    }
 
-
-    static loadAllTablesAndAssignAllClasses() {
-
-        let tableArrays = ["product", "category", "user", "command", "command_line"];
-
-        $(tableArrays).each((e) => {
-
-            Rest.get({table:tableArrays[e]}).done((viewStr) => {           
-
-
-                let data = viewStr.tryJsonParse();
-                let className = Utils.capitalize(tableArrays[e]);
-                let classe = Utils.tryEval(className);
-                let arr = [];
-    
-                $(data).each((i,obj) => {
-                    arr.push(new classe(obj));
-                })
-         
-                App.datas[tableArrays[e]] = arr;   
-
-        })
-    })      
-    }
 
   
 }
