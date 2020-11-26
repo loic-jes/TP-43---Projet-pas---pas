@@ -126,9 +126,9 @@ static list = [];
 
                     $(json).each((i, obj)  => {
                     arr.push(new classe(obj));
+                    classe.list.push(new classe(obj));
                     })
 
-                    classe.list.push(arr);
                     
                     deferred.resolve(arr);
                     let bp;
@@ -154,6 +154,19 @@ static list = [];
 
         return deferred.promise();  
 }
+
+static getOne(id){
+    let classe = this;
+    return classe.list.filter(list => list.id == id)[0];
+
+}
+
+static getAll(){
+    let classe = this;
+    return classe.list
+}
+
+
 
 //     select (table, id=null){ // Old Select
 
