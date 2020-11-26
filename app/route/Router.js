@@ -72,7 +72,7 @@ class Router {
 
         requests.push($.get('app/view/' + page + ".html").done((resp) => {
            
-            view = resp;
+            view = $(resp);
                
         }).fail((resp) => {
 
