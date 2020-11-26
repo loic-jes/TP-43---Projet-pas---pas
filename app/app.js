@@ -44,7 +44,7 @@ class App {
         }   
      //  le routeur en JS
         Router.route(route, postHash).done(view => {
-            //le router js renvoie juste la vue, les models sont déjà remplis
+            view.render()
             $('main').hide().html(view).fadeIn('fast');
         })
     }
