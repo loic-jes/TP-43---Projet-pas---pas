@@ -116,6 +116,9 @@ class App {
         // Tests : Qui sont sensés marcher (et marchent bien)
 
         // let produkt = new Product({ id: 160, active: false, category_id: 3, title: 'ABC', description: 'DEF', price: 10.5, onsale: false, ord: 100 });         // Marche bien avec une autre classe : pour l'exemple Category
+
+        // let bp;
+        
         // produkt.insert().done((resp) => {
 
         //     produkt.title = "Le title"; // Ne marche plus si on gris le champ : fonctionne bien

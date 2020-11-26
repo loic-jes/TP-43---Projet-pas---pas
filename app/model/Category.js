@@ -15,4 +15,9 @@ class Category extends Model{
     onsale = false;
     ord = 0;
 
+    get product(){
+        return Product.getAll().filter(list => list.category_id == this.id)
+
+    }
+
 }
