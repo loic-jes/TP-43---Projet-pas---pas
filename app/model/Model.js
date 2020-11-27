@@ -187,13 +187,13 @@ static getAll(){
         return this;
     }
 
-    get deleteButton(){
-        return new DeleteButton(this).render();
-    }
+    // get deleteButton(){
+    //     return new DeleteButton(this).render();
+    // }
 
-    get gotoButton(){
-        return new GotoButton(this).render();
-    }
+    // get gotoButton(){
+    //     return new GotoButton(this).render();
+    // }
 
 
 

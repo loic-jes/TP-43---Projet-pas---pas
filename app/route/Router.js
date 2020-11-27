@@ -97,13 +97,13 @@ class Router {
 
         //Synchronisation
         $.when.apply($, requests).then(()=>{
-            console.clear();
-            console.log("Page : " + page);
-            console.log("Product Array");
-            console.log(Product.list);
-            console.log("Category Array");
-            console.log(Category.list);
-            console.log("____________________________");
+            // console.clear();
+            // console.log("Page : " + page);
+            // console.log("Product Array");
+            // console.log(Product.list);
+            // console.log("Category Array");
+            // console.log(Category.list);
+            // console.log("____________________________");
             deferred.resolve(view)
         })
         return deferred.promise();

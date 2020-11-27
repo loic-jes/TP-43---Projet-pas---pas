@@ -4,17 +4,6 @@ class App {
     
     static start() {
 
-        //onpopstate
-        window.onpopstate = () => {
-            App.browse();
-        }
-
-        //correction burger : le réduit si on clique pour changer de vue
-        $('.nav-link').on('click', (evt) => {
-            let btn = $(evt.target).closest('.navbar').find('.navbar-toggler').not('.collapsed');
-            btn ? btn.click() : null;
-        })
-
         //chargement de la page
         $(document).ready(() => {
             App.loadClasses().done(() => {    // Charge les classes
@@ -26,6 +15,19 @@ class App {
     
 
         });
+
+        //onpopstate
+        window.onpopstate = () => {
+            App.browse();
+        }
+
+        //correction burger : le réduit si on clique pour changer de vue
+        $('.nav-link').on('click', (evt) => {
+            let btn = $(evt.target).closest('.navbar').find('.navbar-toggler').not('.collapsed');
+            btn ? btn.click() : null;
+        })
+
+
 
     }
 
@@ -50,7 +52,7 @@ class App {
     }
 
     static classes = [
-        "Utils", "Rest", "model/Model", "router/Router"
+        "Utils", "Rest", "model/Model", "route/Router"
     ];
     static components = [
         "BoolBadge", "BoolSwitch", "DeleteButton", "GotoButton"

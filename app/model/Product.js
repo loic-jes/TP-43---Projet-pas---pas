@@ -21,17 +21,11 @@ class Product extends Model {
     }
 
     get onsaleBadge(){
-        console.log("trololo");
-        try {
-            return new BoolBadge(this.onsale).render();
-        }
-        catch {
-            return "Error";
-        }
+        return new BoolBadge(this.onsale).render();
     }
 
-    get onsaleSwitch(){
-        return new BoolSwitch({model: this, prop:'onsale'}).render();
-    }
+    // get onsaleSwitch(){
+    //     return new BoolSwitch({model: this, prop:'onsale'}).render();
+    // }
 
 }
