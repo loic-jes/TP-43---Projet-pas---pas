@@ -51,11 +51,29 @@ class Utils {
             }
             let exprEval = bind.tryEval(context);
             if(exprEval != undefined){
-                if(exprEval instanceof Model){
+                if (exprEval instanceof Array){
+
+                    $(elt).data({list:exprEval});
+                    let name = $(elt).data('name') || 'item';
+                    let template = $(elt).findWithData('bind', name);
+                    template.detach();
+
+                    for (let obj of exprEval) {
+                        let component = template.clone(true);
+                        context = {};
+                        context[name] = obj;
+                        $(component).render(context);
+                        $(elt).append(component);
+                    }
+                
+                } else if(exprEval instanceof Model){
                     $(elt).data({item:exprEval})
                     let name = $(elt).data('name') || 'item';
+
+                    if (context == undefined) {
                     let context = {}
                     context[name] = exprEval;
+                }
                     let childs = $(elt).children()
                     $(childs).each((i,child)=>{
                         $(child).render(context)
@@ -103,13 +121,23 @@ class Utils {
                 // console.log("");
                 $(elt).data(expr, datas[expr])
                 // console.log("");
+            }         
+        }
 
+        $.fn.findWithData = function(data, value){
 
+            let elt = $(this);
+            let res;
 
+            if (value != undefined) {
+                res = elt.find('*').filter ((i, it) => $(it).data(data) == value);
+            } else {
+                res = elt.find('*').filter((i, it) => $(it).data(data));
             }
 
-            
-            
+            return res;
+
+            // TODO Step 10
         }
 
 
