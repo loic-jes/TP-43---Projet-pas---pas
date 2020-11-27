@@ -65,20 +65,19 @@ class Utils {
                         $(component).render(context);
                         $(elt).append(component);
                     }
-                
-                } else if(exprEval instanceof Model){
-                    $(elt).data({item:exprEval})
-                    let name = $(elt).data('name') || 'item';
-
-                    if (context == undefined) {
-                    let context = {}
-                    context[name] = exprEval;
                 }
-                    let childs = $(elt).children()
-                    $(childs).each((i,child)=>{
-                        $(child).render(context)
-                    })
-                }
+                    else if(exprEval instanceof Model){
+                        $(elt).data({item:exprEval})
+                        if(context == undefined){
+                            let name = $(elt).data('name') || 'item';
+                            context = {}
+                            context[name] = exprEval;
+                        }
+                        let childs = $(elt).children()
+                        $(childs).each((i,child)=>{
+                            $(child).render(context)
+                        })
+                    }
                 else{
                     // console.log(typeof exprEval);
                     // if (typeof exprEval == "boolean") {
