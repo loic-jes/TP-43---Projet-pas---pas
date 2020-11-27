@@ -166,6 +166,35 @@ static getAll(){
     return classe.list
 }
 
+  set(prop, value, update){
+        if(this[prop] != value){
+            let obj = {}
+            obj[prop] = value;
+            this.assign(obj);
+            //updated
+            if(update){
+                this.update().done(()=>{
+                    if(prop == "active" && value == false){//Step 13
+                        this.deleted = true;
+                        this.constructor.list = this.constructor.list.filter((it) => it.id !== this.id)
+                    }
+                    
+                    //updateview
+                    App.updateView(this);
+                })
+            }
+        }
+        return this;
+    }
+
+    get deleteButton(){
+        return new DeleteButton(this).render();
+    }
+
+    get gotoButton(){
+        return new GotoButton(this).render();
+    }
+
 
 
 //     select (table, id=null){ // Old Select

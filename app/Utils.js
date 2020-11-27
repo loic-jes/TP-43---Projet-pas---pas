@@ -81,18 +81,18 @@ class Utils {
                 }
                 else{
                     // console.log(typeof exprEval);
-                    if (typeof exprEval == "boolean") {
-                        switch (exprEval) {
-                            case true :
-                                $(elt).html("Statut : On sale !");
-                                break;
-                            case false :
-                                $(elt).html("Statut : Not on sale !");
-                                break;
-                        }
-                    } else {
+                    // if (typeof exprEval == "boolean") {
+                    //     switch (exprEval) {
+                    //         case true :
+                    //             $(elt).html("Statut : On sale !");
+                    //             break;
+                    //         case false :
+                    //             $(elt).html("Statut : Not on sale !");
+                    //             break;
+                    //     }
+                    // } else {
                     $(elt).html(exprEval)
-                    }
+                    // }
                 }
             }
         }

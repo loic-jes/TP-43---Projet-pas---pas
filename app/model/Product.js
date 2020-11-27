@@ -20,4 +20,12 @@ class Product extends Model {
         return Category.getOne(this.category_id)
     }
 
+    get onsaleBadge(){
+        return new BoolBadge(this.onsale).render();
+    }
+
+    get onsaleSwitch(){
+        return new BoolSwitch({model: this, prop:'onsale'}).render();
+    }
+
 }

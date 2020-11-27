@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody data-bind="Product.list" data-name="product">
-                <tr data-bind="product" data-name="product">
+                <tr data-bind="product">
                     <td>
                         <span data-bind="product.title"></span>
                     </td>
@@ -29,7 +29,7 @@
                         <span data-bind="product.category.title">Aucune</span>
                     </td>
                     <td>
-                        <span data-bind="product.onsale"></span>
+                        <span data-bind="product.onsaleBadge"></span>
                     </td>
                 </tr>
             </tbody>

@@ -50,23 +50,25 @@ class App {
     }
 
     static classes = [
-        "Utils", "Rest" , "model/Model", "route/Router"
+        "Utils", "Rest", "model/Model", "router/Router"
     ];
+    static components = [
+        "BoolBadge", "BoolSwitch", "DeleteButton", "GotoButton"
+    ]
     static extends = [
-        "model/Product", "model/Category", "model/Command", "model/Command_line", "model/User"
+        "model/Product", "model/Category"
     ];
     static loadClasses() {
         let deferred = $.Deferred();
-        let _classes = $.map(App.classes, (cl) => {//Chargement de la classe mère
-            return App.debug ? 
-                App.getScript("app/" + cl + ".js") : 
-                $.getScript("app/" + cl + ".js");
+        let _classes = $.map(App.classes, (cl) => {
+            return App.getScript("app/" + cl + ".js");
         });
-        $.when.apply($, _classes).then(() => {//Puis chargement des classes filles
+        let _components = $.map(App.components, (cl) => {
+            return App.getScript("app/component/" + cl + ".jsx");
+        });
+        $.when(_components, _classes).then(() => {
             let _extends = $.map(App.extends, (cl) => {
-                return App.debug ? 
-                    App.getScript("app/" + cl + ".js") : 
-                    $.getScript("app/" + cl + ".js");
+                return App.getScript("app/" + cl + ".js");
             });
             $.when.apply($, _extends).then(() => {
                 deferred.resolve()
@@ -79,7 +81,10 @@ class App {
         const script = document.createElement('script');
         script.src = scriptUrl;
         script.defer = true;
-        script.onload = function(){
+        if(scriptUrl.endsWith('.jsx')){
+            script.type = "text/babel";
+        }
+        script.onload = function () {
             deferred.resolve()
         };
         document.body.appendChild(script);
