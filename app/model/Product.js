@@ -21,7 +21,13 @@ class Product extends Model {
     }
 
     get onsaleBadge(){
-        return new BoolBadge(this.onsale).render();
+        console.log("trololo");
+        try {
+            return new BoolBadge(this.onsale).render();
+        }
+        catch {
+            return "Error";
+        }
     }
 
     get onsaleSwitch(){

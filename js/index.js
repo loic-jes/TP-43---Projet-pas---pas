@@ -27,6 +27,3 @@ const createFragment = (props, ...children) => {
 };
 
 App.start();
-
-
-

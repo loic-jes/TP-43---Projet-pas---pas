@@ -7,7 +7,6 @@ class Category extends Model{
         let bp;
     }
 
-
     id = 0;
     active = true;
     title = "";
@@ -17,7 +16,6 @@ class Category extends Model{
 
     get product(){
         return Product.getAll().filter(list => list.category_id == this.id)
-
     }
-
+    
 }
