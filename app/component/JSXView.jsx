@@ -9,6 +9,20 @@ class JSXView {
 
     }
 
+    testif(table) {
+        if (table == "product") {
+            let billy = ( 
+                <div>                                    
+            <th scope="col">Prix</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Vendu</th> 
+            </div>            
+            );
+            return billy;
+        }
+
+    }
+
     render() {
 
         const classe = Utils.capitalize(this.route) // devrait donner Product
@@ -16,7 +30,7 @@ class JSXView {
         let elt;
 
 
-        if (this.id == null) {
+        if (this.id != null) {
 
 
              elt = (
@@ -38,7 +52,7 @@ class JSXView {
             return elt;
 
 
-        } else if (this.id != null) {
+        } else if (this.id == null) {
 
              elt = (
 
@@ -52,9 +66,7 @@ class JSXView {
                                 <tr>
                                     <th scope="col">Designation</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Prix</th>
-                                    <th scope="col">Catégorie</th>
-                                    <th scope="col">Vendu</th>
+                                    {this.testif(type)};
                                 </tr>
                             </thead>
                             <tbody data-bind={classe + ".list[0]"} data-name={'"' + type + '"'}>

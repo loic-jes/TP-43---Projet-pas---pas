@@ -54,7 +54,8 @@ class App {
         }   
      //  le routeur en JS
         Router.route(route, postHash).done(view => {
-            view.render()
+            let test = JSON.stringify(view);
+            // view.render()
             $('main').hide().html(view).fadeIn('fast');
         })
     }

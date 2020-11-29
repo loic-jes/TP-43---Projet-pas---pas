@@ -70,18 +70,18 @@ class Router {
         let view;
         //TODO Requete pour récuperer la vue
 
-        // let view = new JSXView(page, postHash).render()
+        view = new JSXView(page, postHash).render()
 
-        requests.push($.get('app/view/' + page + ".html").done((resp) => {
+        // requests.push($.get('app/view/' + page + ".html").done((resp) => {
            
-            view = $(resp);
+        //     view = $(resp);
                
-        }).fail((resp) => {
+        // }).fail((resp) => {
 
-            console.log(resp);
-            console.log( "Erreur même sur le 404 ?");
+        //     console.log(resp);
+        //     console.log( "Erreur même sur le 404 ?");
 
-        }))
+        // }))
         
 
         
