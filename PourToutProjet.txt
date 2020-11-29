@@ -1,3 +1,5 @@
 1) Modifier le lien de la base de données dans db.php
 2) Adapter les fichiers modèles (les classes, pas le model) : le nom, et le constructeur
 3) Adapter l'appel des classes dans la fonction chargement de classe de App.JS
+
+Test 2
