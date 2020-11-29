@@ -5,12 +5,20 @@ class App {
     static start() {
 
         //chargement de la page
-        $(document).ready(() => {
+        // $(document).ready(() => {
+        //     App.loadClasses().done(() => {    // Charge les classes
+        //         Utils.init()                  // Effectue les surcharges de String
+        //         // App.loadAllTablesAndAssignAllClasses();       // Pas opti
+        //         App.browse();  
+        //         // App.test();
+        //     })
             App.loadClasses().done(() => {    // Charge les classes
                 Utils.init()                  // Effectue les surcharges de String
-                // App.loadAllTablesAndAssignAllClasses();       // Pas opti
-                App.browse();  
-                // App.test();
+                    $(document).ready(() => {
+
+                    // App.loadAllTablesAndAssignAllClasses();       // Pas opti
+                    App.browse();  
+                 // App.test();
             })
     
 
@@ -55,7 +63,7 @@ class App {
         "Utils", "Rest", "model/Model", "route/Router"
     ];
     static components = [
-        "BoolBadge", "BoolSwitch", "DeleteButton", "GotoButton"
+        "BoolBadge"
     ]
     static extends = [
         "model/Product", "model/Category"
@@ -84,7 +92,7 @@ class App {
         script.src = scriptUrl;
         script.defer = true;
         if(scriptUrl.endsWith('.jsx')){
-            script.type = "text/babel";
+            script.type ="text/babel";
         }
         script.onload = function () {
             deferred.resolve()

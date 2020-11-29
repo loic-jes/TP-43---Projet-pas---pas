@@ -9,7 +9,7 @@ class BoolBadge{
 
     render(){
         const classe =  + (this.prop) ? "success" : "danger";
-        const text = this.prop ? "O" : "N";
+        const text = this.prop ? "On sale !" : "Not on sale !";
         let elt = (
             <span class={"badge badge-" + classe}>
                 {text}

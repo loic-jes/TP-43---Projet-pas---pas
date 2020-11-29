@@ -26,4 +26,12 @@ const createFragment = (props, ...children) => {
     return children;
 };
 
+// document.onreadystatechange = function () {
+//     if (document.readyState === 'complete') {
+//         if (document.querySelectorAll('head script').length === 0) {
+//             window.dispatchEvent(new Event('DOMContentLoaded'));
+//         }
+//     }
+// }
+
 App.start();

@@ -70,6 +70,8 @@ class Router {
         let view;
         //TODO Requete pour récuperer la vue
 
+        // let view = new JSXView(page, postHash).render()
+
         requests.push($.get('app/view/' + page + ".html").done((resp) => {
            
             view = $(resp);
@@ -80,6 +82,8 @@ class Router {
             console.log( "Erreur même sur le 404 ?");
 
         }))
+        
+
         
         //TODO Requete pour les données (utiliser select)
 
